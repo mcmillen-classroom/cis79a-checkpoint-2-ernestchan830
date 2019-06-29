@@ -9,4 +9,6 @@
     <color name="colorBtn">#FC1010</color>
     <color name="colorBtnbg">#88CBE7</color>
     <color name="colorBtnbg2">#E273CD</color>
+    <color name="colorHelp">#000000</color>
+
 </resources>

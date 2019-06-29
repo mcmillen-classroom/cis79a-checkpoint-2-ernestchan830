@@ -2,11 +2,21 @@ package ernestchan.quizapp;
 
 public class Question {
     private int mTextResId;
+    private int mHintTextResId;
     private boolean mAnswer;
 
-    public Question(int textResId, boolean answer) {
+    public Question(int textResId, int hintTextResId, boolean answer) {
         mTextResId = textResId;
+        mHintTextResId = hintTextResId;
         mAnswer = answer;
+    }
+
+    public int getHintTextResId() {
+        return mHintTextResId;
+    }
+
+    public void setHintTextResId(int hintTextResId) {
+        mHintTextResId = hintTextResId;
     }
 
     public int getTextResId() {
