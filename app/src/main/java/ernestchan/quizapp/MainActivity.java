@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,9 +15,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView mTextView;
 
+    TextView score_view;
+    Button true_button;
+
+    int score = 0;
+
     private Button mTrueButton;
     private Button mFalseButton;
-    private Button mNextButton;
+    private ImageButton mNextButton;
+    private ImageButton mBackButton;
+    private Button mHelpButton;
 
 
     private Question[] mQuestions;
@@ -30,23 +38,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
-        mNextButton = (Button) findViewById(R.id.next_button);
+        mNextButton = (ImageButton) findViewById(R.id.next_button);
+        mBackButton = (ImageButton) findViewById(R.id.back_button);
+        mHelpButton = (Button) findViewById(R.id.hintTextResId);
 
+        score_view = (TextView) findViewById(R.id.score_view);
+        score_view.setText("Score: " + score);
 
         mTrueButton.setOnClickListener(this);
         mFalseButton.setOnClickListener(this);
         mNextButton.setOnClickListener(this);
+        mBackButton.setOnClickListener(this);
+        mHelpButton.setOnClickListener(this);
 //when next button is clicked next button runs
 
         mTextView = (TextView) findViewById(R.id.text_view);
 
-        mQuestions = new Question[4];
+        mQuestions = new Question[5];
         mIndex = 0;
 
-        mQuestions[0] = new Question(R.string.question_text1, true);
-        mQuestions[1] = new Question(R.string.question_text2, true);
-        mQuestions[2] = new Question(R.string.question_text3, true);
-        mQuestions[3] = new Question(R.string.question_text4, true);
+        mQuestions[0] = new Question(R.string.question_text1, R.string.question_text1_hint, true);
+        mQuestions[1] = new Question(R.string.question_text2, R.string.question_text2_hint, false);
+        mQuestions[2] = new Question(R.string.question_text3, R.string.question_text3_hint, true);
+        mQuestions[3] = new Question(R.string.question_text4, R.string.question_text4_hint, true);
+        mQuestions[4] = new Question(R.string.question_text5, R.string.question_text5_hint, false);
 
         mTextView.setText(mQuestions[mIndex].getTextResId());
     }
@@ -56,11 +71,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view.getId() == R.id.true_button) {
             checkAnswer(true);
+            score++;
+            score_view.setText("Score: " + score);
+
         } else if (view.getId() == R.id.false_button) {
             checkAnswer(false);
+                score--;
+                score_view.setText("Score: " + score);
+
         } else if (view.getId() == R.id.next_button) {
-            mIndex++;
-            mTextView.setText(mQuestions[mIndex].getTextResId());
+            if (mIndex < 4){
+                mIndex++;
+                mTextView.setText(mQuestions[mIndex].getTextResId());
+            }
+        } else if (view.getId() == R.id.back_button){
+            if (mIndex > 0) {
+                mIndex--;
+                mTextView.setText(mQuestions[mIndex].getTextResId());
+            }
+        }  if (view.getId() == R.id.hintTextResId) {
+
+            // USING INDEX
+            Toast myToast = Toast.makeText(this, mQuestions[mIndex].getHintTextResId(), Toast.LENGTH_LONG);
+            myToast.show();
         }
     }
 
@@ -70,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 myToast.show();
                 return true;
             } else {
-                Toast myToast = Toast.makeText(this, "You are correct", Toast.LENGTH_SHORT);
+                Toast myToast = Toast.makeText(this, "You are incorrect", Toast.LENGTH_SHORT);
                 myToast.show();
                 return false;
             }
