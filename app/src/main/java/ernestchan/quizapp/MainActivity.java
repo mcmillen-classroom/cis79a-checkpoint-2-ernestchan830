@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         mTrueButton = (Button) findViewById(R.id.true_button);
-        mFalseButton =  (Button)  findViewById(R.id.false_button);
+        mFalseButton = (Button) findViewById(R.id.false_button);
         mNextButton = (Button) findViewById(R.id.next_button);
 
 
@@ -62,8 +62,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mIndex++;
             mTextView.setText(mQuestions[mIndex].getTextResId());
         }
+    }
 
-        public boolean checkAnswer ( boolean userInput){
+        public boolean checkAnswer(boolean userInput){
             if (mQuestions[mIndex].getAnswer() == userInput) {
                 Toast myToast = Toast.makeText(this, "You are correct", Toast.LENGTH_SHORT);
                 myToast.show();
